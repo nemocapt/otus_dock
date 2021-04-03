@@ -1,0 +1,12 @@
+fullnameOverride: mongo
+
+service:
+  type: NodePort
+  port: 27017
+
+persistence:
+  enabled: true
+  size: 1Gi
+
+auth:
+  enabled: false
