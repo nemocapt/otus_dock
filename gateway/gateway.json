@@ -1,0 +1,294 @@
+{
+	"info": {
+		"_postman_id": "5caa460c-1dea-4f8a-8465-ad11001bbeb1",
+		"name": "gateway",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "_1_ авторизация первого пользователя",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.collectionVariables.set(\"SESSION\", pm.response.headers.get(\"AUTH-SESSION\"))\r",
+							"\r",
+							"pm.globals.set(\"USR\", pm.variables.replaceIn('{{$randomFirstName}}'))\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"login\": \"{{USR}}\",\r\n    \"password\": \"pass\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://arch.homework:80/auth/login",
+					"protocol": "http",
+					"host": [
+						"arch",
+						"homework"
+					],
+					"port": "80",
+					"path": [
+						"auth",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "_2_ добавить профиль первого пользователя",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "AUTH-SESSION",
+						"value": "{{SESSION}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"user\": \"{{USR}}\",\r\n    \"firstName\": \"Name\",\r\n    \"lastName\": \"Lastname\",\r\n    \"email\": \"mail@mail\",\r\n    \"phone\": \"8495\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://arch.homework:80/user",
+					"protocol": "http",
+					"host": [
+						"arch",
+						"homework"
+					],
+					"port": "80",
+					"path": [
+						"user"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "_3_ получить профиль первого пользователя",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "AUTH-SESSION",
+						"value": "{{SESSION}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://arch.homework:80/user/{{USR}}",
+					"protocol": "http",
+					"host": [
+						"arch",
+						"homework"
+					],
+					"port": "80",
+					"path": [
+						"user",
+						"{{USR}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "_4_ получить профиль первого пользователя, не авторизованы",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://arch.homework:80/user/{{USR}}",
+					"protocol": "http",
+					"host": [
+						"arch",
+						"homework"
+					],
+					"port": "80",
+					"path": [
+						"user",
+						"{{USR}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "_5_ авторизация второго пользователя",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.collectionVariables.set(\"SESSION\", pm.response.headers.get(\"AUTH-SESSION\"))\r",
+							"\r",
+							"pm.globals.set(\"USR2\", pm.variables.replaceIn('{{$randomFirstName}}'))\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"login\": \"{{USR}}\",\r\n    \"password\": \"pass\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://arch.homework:80/auth/login",
+					"protocol": "http",
+					"host": [
+						"arch",
+						"homework"
+					],
+					"port": "80",
+					"path": [
+						"auth",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "_6_ добавить профиль второго пользователя",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "AUTH-SESSION",
+						"value": "{{SESSION}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"user\": \"{{USR2}}\",\r\n    \"firstName\": \"FName\",\r\n    \"lastName\": \"LName\",\r\n    \"email\": \"email@mail\",\r\n    \"phone\": \"8495\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://arch.homework:80/user",
+					"protocol": "http",
+					"host": [
+						"arch",
+						"homework"
+					],
+					"port": "80",
+					"path": [
+						"user"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "_7_ получить профиль первого пользователя от имени второго",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "AUTH-SESSION",
+						"value": "{{SESSION}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://arch.homework:80/user/{{USR2}}",
+					"protocol": "http",
+					"host": [
+						"arch",
+						"homework"
+					],
+					"port": "80",
+					"path": [
+						"user",
+						"{{USR2}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "_8_ попытка изменить первый профиль от имени второго пользователя",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "AUTH-SESSION",
+						"value": "Bearer {{SESSION}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"user\": \"DELETED\",\r\n    \"firstName\": \"Fake\",\r\n    \"lastName\": \"null\",\r\n    \"email\": \"empty\",\r\n    \"phone\": \"8495\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://arch.homework:80/user/{{USR}}",
+					"protocol": "http",
+					"host": [
+						"arch",
+						"homework"
+					],
+					"port": "80",
+					"path": [
+						"user",
+						"{{USR}}"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"variable": [
+		{
+			"key": "SESSION",
+			"value": ""
+		},
+		{
+			"key": "USR",
+			"value": ""
+		}
+	]
+}

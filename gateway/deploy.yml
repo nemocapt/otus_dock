@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+    name: sample-rest-deploy
+spec:
+    replicas: 1
+    selector:
+       matchLabels:
+          app: app-rest
+    template:
+       metadata:
+          labels:
+             app: app-rest
+       spec:
+          containers:
+          - name: sample-rest
+            image: cnemo/sample-rest:v6
+            ports:
+              - name: rest 
+                containerPort: 8000
+            env:
+              - name: URI
+                valueFrom:
+                  secretKeyRef:
+                    name: mongo-secret
+                    key: URI
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+    name: sample-auth-deploy
+spec:
+    replicas: 1
+    selector:
+       matchLabels:
+          app: app-auth
+    template:
+       metadata:
+          labels:
+             app: app-auth
+       spec:
+          containers:
+          - name: sample-auth
+            image: cnemo/auth:v2
+            ports:
+              - name: auth 
+                containerPort: 9000
